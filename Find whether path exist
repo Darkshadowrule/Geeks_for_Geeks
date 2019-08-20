@@ -1,0 +1,88 @@
+/*Given a N X N matrix (M) filled with 1, 0, 2, 3. The task is to find whether there is a path possible from source to destination, while traversing through blank cells only. You can traverse up, down, right and left.
+
+A value of cell 1 means Source.
+A value of cell 2 means Destination.
+A value of cell 3 means Blank cell.
+A value of cell 0 means Blank Wall.
+Note: there is only single source and single destination.
+
+ */
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+bool check(int x,int y,int n)
+{
+   if (x >= 0 && x < n && y >= 0 && y < n) 
+        return true; 
+    return false;
+}
+int ans(int a[21][21],int n)
+{   int i,j;
+    int a1[]={1,-1,0,0};
+    int b1[]={0,0,1,-1};
+    queue<pair<pair<int,int>,int>>q1;
+    pair<int,int>p1;
+    pair<int,int>s1;
+    int visited[n][n];
+    for(i=0;i<n;i++)
+    {
+        for(j=0;j<n;j++)
+        { 
+            visited[i][j]=0;
+            
+        }}
+    
+    for(i=0;i<n;i++)
+    {
+        for(j=0;j<n;j++)
+        {   
+            if(a[i][j]==1)
+            p1=make_pair(i,j);
+            if(a[i][j]==2)
+            s1=make_pair(i,j);
+            if(a[i][j]==0)
+            visited[i][j]=1;
+        }
+    }
+    q1.push(make_pair(p1,0));
+    while(!q1.empty()){
+        int i,j;
+        pair<pair<int,int>,int> p=q1.front();
+        q1.pop();
+        if(p.first.first==s1.first and p.first.second==s1.second)
+        return 1;
+        for(i=0;i<4;i++)
+        {
+            int x=p.first.first+a1[i];
+            int y=p.first.second+b1[i];
+            if(check(x,y,n) and !visited[x][y])
+            {
+                q1.push(make_pair(make_pair(x,y),0));
+                visited[x][y]=1;
+            }
+        }
+    }
+    return 0;
+    
+}
+
+int main() {
+	//code
+	int t;
+	cin>>t;
+	while(t--)
+	{
+	    int n;
+	    cin>>n;	
+	    int i,j,a[21][21];
+	    for(i=0;i<n;i++)
+	    for(j=0;j<n;j++)
+	    cin>>a[i][j];
+	    cout<<ans(a,n)<<endl;
+	    
+	}
+	
+	return 0;
+}
