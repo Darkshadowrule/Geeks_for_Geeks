@@ -1,0 +1,92 @@
+/*
+Given a chess board of order N x M and source points (s1, s2) and destination points (d1, d2). The task to find minimum number of moves required by the Knight to go to the destination cell.
+
+Input:
+The first line of input contains an integer T denoting the number of testcases. Then T test cases follow. Each test case contains two lines. The first line of each testcase contains two space separated integers N and M. Then in the next line are four space separated values s1, s2 and d1, d2.
+
+Output:
+For each testcase in a new line print the minimum number of moves required by the knight to go to the destination from the source. If no such move is possible print -1.
+
+Constraints:
+1 <= T <= 100
+1 <= N, M <= 25
+
+Example:
+Input:
+2
+4 7
+2 6 2 4
+7 13
+2 8 3 4
+
+Output:
+2
+3
+*/
+
+******************************************************************************************************************************************************************************
+******************************************************************************************************************************************************************************
+******************************************************************************************************************************************************************************
+
+
+#include<bits/stdc++.h>
+using namespace std;
+bool visited[26][26];
+int n,m;
+bool check(int x1,int y1)
+{
+	if(x1>=0 and x1<n and y1>=0 and y1<m)
+	return true;
+	return false;
+}
+int bfs(int x1,int y1,int x2,int y2)
+{   queue<pair <int,pair<int,int> > >q1;
+int count=0;
+	int a1[]={1,-1,1,-1,2,2,-2,-2};
+	int b1[]={2,2,-2,-2,1,-1,1,-1};
+	visited[x1][y1]=1;
+	q1.push(make_pair(0,make_pair(x1,y1)));
+	while(!q1.empty())
+	{  count+=1;
+		pair<int,pair<int,int> >p=q1.front();
+		if(p.second.first==x2 and p.second.second==y2)
+		return p.first;
+		q1.pop();
+		for(int i=0;i<=7;i++)
+		{
+			int x1=p.second.first+a1[i];
+			int y1=p.second.second+b1[i];
+			if(!visited[x1][y1] and check(x1,y1))
+			{
+				visited[x1][y1] =true;
+				q1.push(make_pair(p.first+1,make_pair(x1,y1)));
+			}
+
+		}
+		
+	}
+	return -1;
+	
+}
+
+int main()
+{
+	int t;
+	cin>>t;
+	while(t--)
+	{
+		cin>>n>>m;
+int x1,x2,y1,y2,i,j;
+cin>>x1>>y1>>x2>>y2;
+x1--;
+y1--;
+x2--;
+y2--;
+for(i=0;i<n;i++)
+for(j=0;j<m;j++)
+visited[i][j]=0;
+cout<<bfs(x1,y1,x2,y2)<<endl;
+	}
+
+
+}
